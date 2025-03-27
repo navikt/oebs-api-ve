@@ -1,4 +1,5 @@
-FROM navikt/java:18
+# FROM navikt/java:18
+FROM gcr.io/distroless/java21
 
 WORKDIR /app
 
