@@ -39,7 +39,7 @@ jobs:
           salsa: true
 
 
-      - name: Deploy to NAIS (Q1)
+      - name: Deploy to NAIS (T1)
         if: startsWith(github.ref, 'refs/heads/dev/t1')  || github.ref == 'refs/heads/main'
         uses: nais/deploy/actions/deploy@v2
         env:
@@ -47,7 +47,7 @@ jobs:
           RESOURCE: .nais/nais-t1.yaml
           IMAGE: ${{ steps.docker-push.outputs.image }}
 
-      - name: Deploy to NAIS (Q1)
+      - name: Deploy to NAIS (U1)
         if: startsWith(github.ref, 'refs/heads/dev/u1')  || github.ref == 'refs/heads/main'
         uses: nais/deploy/actions/deploy@v2
         env:
