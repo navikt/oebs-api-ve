@@ -7,7 +7,7 @@ import no.nav.security.token.support.core.api.Unprotected;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
+//@RestController
 @RequestMapping(path = "/api/v1")
 // @Api(tags = { SwaggerConfig.PING_TAG })
 public class PingController {
