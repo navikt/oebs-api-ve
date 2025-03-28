@@ -2,14 +2,12 @@ package no.nav.oebs.restapi.api.ping.v1;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import no.nav.oebs.restapi.config.SwaggerConfig;
 import no.nav.oebs.restapi.health.HealthCheckDbProbe;
 import no.nav.security.token.support.core.api.Unprotected;
+import org.springframework.web.bind.annotation.RestController;
 
 
- //@RestController
+@RestController
 @RequestMapping(path = "/api/v1")
 // @Api(tags = { SwaggerConfig.PING_TAG })
 public class PingController {

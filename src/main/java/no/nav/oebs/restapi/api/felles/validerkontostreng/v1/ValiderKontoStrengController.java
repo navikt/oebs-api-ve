@@ -8,7 +8,6 @@ import no.nav.oebs.restapi.api.common.swagger.FellesSwagger;
 import no.nav.security.token.support.core.api.Protected;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import no.nav.oebs.restapi.config.SwaggerConfig;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -17,15 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Parameter;
-
-/*
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
-*/
-
-import no.nav.oebs.restapi.api.common.swagger.EyeShareSwagger;
-
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 @Slf4j
 @RestController
