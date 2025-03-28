@@ -6,7 +6,7 @@ metadata:
   labels:
     team: team-oebs
 spec:
-  image: repo.adeo.no:5443/oebs/oebs-api-ve:0.7.1
+  image: {{ image }}
   port: 8080
   replicas:
     min: 3
@@ -31,17 +31,6 @@ spec:
     application:
       enabled: true
       allowAllUsers: true
-  accessPolicy:
-    inbound:
-      rules:
-         - application: oebs-api-ve
-           namespace: team-oebs
-           cluster: prod-fss
-    outbound:
-      external:
-        - host: nav.eye-share.com
-        - host: nav.vieri.no
-        - host: vieri-api-prod.developer.azure-api.net
 
   prometheus:
     enabled: true
