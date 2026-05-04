@@ -1,12 +1,23 @@
 
 server:
   port: 8080
+  error:
+    include-stacktrace: on_param
 
 spring:
+  application:
+    name: oebs-api-ve
   profiles:
      active: nais
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+    hikari:
+      maximum-pool-size: 60
+      minimum-idle: 20
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -15,6 +26,15 @@ spring:
     #    dialect: org.hibernate.dialect.Oracle12cDialect
     show-sql: false
     open-in-view: false
+
+no:
+  nav:
+    security:
+      jwt:
+        issuer:
+          azure:
+            accepted_audience: ${AZURE_ACCEPTED_AUDIENCE}
+            discoveryurl:  ${AZURE_DISCOVERY_URL}
 
 management:
   endpoints:
@@ -29,6 +49,19 @@ springdoc:
   swagger-ui:
     disable-swagger-default-url: true
     tags-sorter: alpha
+
+vieri:
+  api:
+    loadaccounts: ${VIERI_LOAD_ACCOUNTS}
+    loadsuppliers: ${VIERI_LOAD_SUPPLIERS}
+    loaddimensions: ${VIERI_LOAD_DIMENTIONS}
+  ocp:
+    management: ${VIERI_OCP_MANAGEMENT}
+
+oebs:
+  environment: OEBSP
+  version: 0.7.0
+  date: 16.07.2024
 
 # logging:
 #  level:
