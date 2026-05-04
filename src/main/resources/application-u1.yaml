@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: oebs-api-ve-u1
+
+no:
+  nav:
+    security:
+      jwt:
+        issuer:
+          azure:
+            discoveryurl: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration
+            proxyurl: http://webproxy-nais.nav.no:8088
+
+vieri:
+  api:
+    loadaccounts: https://vieri-api-qa.azure-api.net/vieri-dataloader/LoadAccounts
+    loadsuppliers: https://vieri-api-qa.azure-api.net/vieri-dataloader/LoadSuppliers
+    loaddimensions: https://vieri-api-qa.azure-api.net/vieri-dataloader/LoadDimensions
+
+oebs:
+  environment: OEBSU1
+  version: 0.6.6
+  date: 31.10.2023
