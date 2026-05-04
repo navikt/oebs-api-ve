@@ -1,0 +1,64 @@
+server:
+  port: 8080
+  error:
+    include-stacktrace: on_param
+
+spring:
+  application:
+    name: oebs-api-ve
+  profiles:
+    active: nais
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: test_user
+    password: test_password
+    url: jdbc:oracle:thin:@localhost:1521:testdb
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+    show-sql: true
+    open-in-view: false
+
+no:
+  nav:
+    security:
+      jwt:
+        issuer:
+          azure:
+            accepted_audience: test-audience
+            discoveryurl: http://localhost/test/.well-known/openid-configuration
+            proxyurl:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus, metrics
+
+springdoc:
+  packagesToScan: no.nav.oebs.restapi.api
+  override-with-generic-response: false
+  remove-broken-reference-definitions: false
+  swagger-ui:
+    disable-swagger-default-url: true
+    tags-sorter: alpha
+
+vieri:
+  api:
+    loadaccounts: http://localhost/test/LoadAccounts
+    loadsuppliers: http://localhost/test/LoadSuppliers
+    loaddimensions: http://localhost/test/LoadDimensions
+  ocp:
+    management: test-ocp-management
+
+oebs:
+  environment: TEST
+  version: 0.7.0
+  date: 16.07.2024
