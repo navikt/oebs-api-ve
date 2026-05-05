@@ -33,6 +33,7 @@ no:
           azure:
             accepted_audience: ${AZURE_ACCEPTED_AUDIENCE}
             discoveryurl:  ${AZURE_DISCOVERY_URL}
+            proxyurl: http://webproxy-nais.nav.no:8088
 
 management:
   endpoints:
