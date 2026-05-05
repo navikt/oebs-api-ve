@@ -27,6 +27,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         details.add(ex.getLocalizedMessage());
 
         ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Feil 401: Ugyldig Aksess token" ,details);
+        logger.debug("401 Unauthorized – HttpClientErrorException fanget");
+        logger.debug("HTTP status: " + ex.getStatusCode());
+        logger.debug("Response body: " + ex.getResponseBodyAsString());
+        logger.debug("Headers: " + ex.getResponseHeaders());
+        logger.debug("Stack trace: ", ex);
 
         return ResponseEntityBuilder.build(err);
 
