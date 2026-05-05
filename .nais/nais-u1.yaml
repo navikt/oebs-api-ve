@@ -9,7 +9,7 @@ spec:
   image: {{ image }}
   port: 8080
   envFrom:
-    - secret: oebs-api-ve-u1
+    - secret: oebs-api-ve-t1
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: u1

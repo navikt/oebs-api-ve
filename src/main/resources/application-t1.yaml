@@ -4,5 +4,5 @@ spring:
 
 oebs:
   environment: OEBST1
-  version: 0.6.6
-  date: 31.10.2023
+  version: 0.6.7
+  date: 05.05.2026
