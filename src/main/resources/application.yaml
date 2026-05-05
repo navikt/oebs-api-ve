@@ -7,8 +7,6 @@ server:
 spring:
   application:
     name: oebs-api-ve
-  profiles:
-     active: nais
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     username: ${DB_USERNAME}
