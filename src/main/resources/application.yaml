@@ -8,7 +8,7 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE}
   application:
-    name: oebs-api-ve
+    name: ${APP_NAME}
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     username: ${DB_USERNAME}
@@ -21,9 +21,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    #properties:
-    #  hibernate:
-    #    dialect: org.hibernate.dialect.Oracle12cDialect
     show-sql: false
     open-in-view: false
 
@@ -35,6 +32,7 @@ no:
           azure:
             accepted_audience: ${AZURE_APP_CLIENT_ID}
             discoveryurl:  ${AZURE_APP_WELL_KNOWN_URL}
+            discovery-url:  ${AZURE_APP_WELL_KNOWN_URL}
             proxyurl: http://webproxy-nais.nav.no:8088
 
 management:

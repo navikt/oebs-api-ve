@@ -1,6 +1,6 @@
-spring:
-  application:
-    name: oebs-api-ve-u1
+#spring:
+#  application:
+#    name: oebs-api-ve-u1
 
 oebs:
   environment: OEBSU1
