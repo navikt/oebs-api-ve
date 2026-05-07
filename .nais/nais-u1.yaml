@@ -13,7 +13,7 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: u1
-    - app-name: APP_NAME
+    - name: APP_NAME
       value: oebs-api-ve-u1
   replicas:
     min: 1
