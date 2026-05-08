@@ -25,7 +25,6 @@ jobs:
           java-version: '21'
 
       - name: Cache SonarCloud packages
-        if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref_name == 'main')
         uses: actions/cache@v5
         with:
           path: ~/.sonar/cache
@@ -33,15 +32,11 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Build and analyze
-        if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref_name == 'main')
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn --no-transfer-progress -B verify -Pcoverage org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
-      - name: Build with Maven
-        run: mvn --no-transfer-progress package
 
       - uses: nais/docker-build-push@v0
         id: docker-push
