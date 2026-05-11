@@ -223,6 +223,7 @@
                         <executions>
                             <execution>
                                 <id>prepare-agent</id>
+                                <phase>initialize</phase>
                                 <goals>
                                     <goal>prepare-agent</goal>
                                 </goals>
@@ -232,11 +233,12 @@
                             </execution>
                             <execution>
                                 <id>report</id>
-                                <phase>prepare-package</phase>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>report</goal>
                                 </goals>
                                 <configuration>
+                                    <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
                                     <formats>
                                         <format>XML</format>
                                     </formats>
