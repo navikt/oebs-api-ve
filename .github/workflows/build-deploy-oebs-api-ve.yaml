@@ -33,15 +33,8 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-#      - name: Build and test
-#        run: mvn --no-transfer-progress -B verify -Pcoverage
-
       - name: Build and test
-        run: |
-          mvn --no-transfer-progress -B verify -Pcoverage
-          echo "--- JaCoCo output ---"
-          ls -la target/site/jacoco/ || echo "IKKE FUNNET: target/site/jacoco/"
-          find target -name "jacoco.xml" 2>/dev/null || echo "Ingen jacoco.xml funnet i target/"
+        run: mvn --no-transfer-progress -B verify -Pcoverage
 
       - name: Analyze with SonarCloud
         env:
