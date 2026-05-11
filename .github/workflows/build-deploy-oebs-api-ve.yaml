@@ -33,11 +33,20 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+#      - name: Build and analyze
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: mvn --no-transfer-progress -B verify -Pcoverage org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn --no-transfer-progress -B verify -Pcoverage org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        run: |
+          mvn --no-transfer-progress -B verify -Pcoverage
+          ls -la target/site/jacoco/ || echo "JaCoCo report NOT found"
+          mvn --no-transfer-progress -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
       - uses: nais/docker-build-push@v0
         id: docker-push
