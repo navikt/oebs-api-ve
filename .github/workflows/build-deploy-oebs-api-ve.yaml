@@ -39,7 +39,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn --no-transfer-progress -B verify -Pcoverage org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
-
       - uses: nais/docker-build-push@v0
         id: docker-push
         with:
