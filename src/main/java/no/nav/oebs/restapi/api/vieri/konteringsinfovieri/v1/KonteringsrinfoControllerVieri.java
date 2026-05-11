@@ -2,7 +2,6 @@ package no.nav.oebs.restapi.api.vieri.konteringsinfovieri.v1;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import no.nav.oebs.restapi.Application;
 import no.nav.oebs.restapi.api.common.swagger.VieriSwagger;
 import no.nav.security.token.support.core.api.Protected;
 
@@ -26,7 +25,7 @@ import java.util.Collections;
 @Tag(name = SwaggerConfig.VIERI, description = "Vieri API")
 public class KonteringsrinfoControllerVieri {
 
-	private static final Logger logger = LoggerFactory.getLogger(Application.class);
+	private static final Logger logger = LoggerFactory.getLogger(KonteringsrinfoControllerVieri.class);
 
 	@Value("${vieri.api.loaddimensions}")
 	private String apiLoadDimensions;
@@ -43,7 +42,7 @@ public class KonteringsrinfoControllerVieri {
 	@PostMapping(path = "/konteringsinfovieri")
 	@VieriSwagger
 	public String konteringsinfovieritransaksjoner(
-			@RequestParam(name="org id", defaultValue = "202") Integer org_id,
+			@RequestParam(name="org id", defaultValue = "202") Integer orgid,
 			@RequestParam(name="segmentnavn", required = false)
 				@Parameter(description = "f.eks. OR_AKTIVITET") String segmentname,
 			@RequestParam(name="segmentverdi", required = false)
@@ -62,7 +61,7 @@ public class KonteringsrinfoControllerVieri {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		headers.set("Ocp-Apim-Subscription-Key", ocpApiManagement);
 
-		String kont = serviceKont.finnKonteringsinfoVieritransaksjoner(org_id, segmentname, segmentverdi, lastupdatedate);
+		String kont = serviceKont.finnKonteringsinfoVieritransaksjoner(orgid, segmentname, segmentverdi, lastupdatedate);
 
 		HttpEntity<String> entity = new HttpEntity<>(kont, headers);
 
