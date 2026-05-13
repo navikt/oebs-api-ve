@@ -17,26 +17,20 @@ public class FakturaInfoService extends ObjektMaps {
 
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_fakturainfo";
 
-	private PlsqlProcedureRepository plsqlProcedureRepository;
+	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
 	public FakturaInfoService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
 
-	public String finnFakturaInfo(String json_faktura) {
+	public String finnFakturaInfo(String jsonFaktura) {
 
 
-		PlsqlProcedureResult result = executePlsqlProcedure(json_faktura);
+		PlsqlProcedureResult result = executePlsqlProcedure(jsonFaktura);
 
 		return result.getData();
 
-	}
-
-	private FakturaInfoRequest buildRequest(String json_faktura) {
-		return FakturaInfoRequest.builder() //
-				.json_faktura(json_faktura) //
-				.build();
 	}
 
 	private PlsqlProcedureResult executePlsqlProcedure(String message) {

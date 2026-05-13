@@ -22,28 +22,28 @@ public class LeverandorinfoService extends ObjektMaps {
 
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_hent_leverandorer";
 
-	private PlsqlProcedureRepository plsqlProcedureRepository;
+	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
 	public LeverandorinfoService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
 
-	public String finnLeverandortransaksjoner(Integer org_id, String leverandornavn,
+	public String finnLeverandortransaksjoner(Integer orgid, String leverandornavn,
 											  String leverandornummer, String leverandorsted, LocalDate lastupdatedate) {
 
 
-		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(org_id, leverandornavn,
+		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(orgid, leverandornavn,
 				leverandornummer, leverandorsted, lastupdatedate));
 
 		return result.getData();
 
 	}
 
-	private LevRequest buildRequest(Integer org_id, String leverandornavn,
+	private LevRequest buildRequest(Integer orgid, String leverandornavn,
 									String leverandornummer, String leverandorsted, LocalDate lastupdatedate) {
 		return LevRequest.builder() //
-				.org_id(org_id) //
+				.org_id(orgid) //
 				.leverandornavn(leverandornavn) //
 				.leverandornummer(leverandornummer) //
 				.leverandorsted(leverandorsted) //

@@ -2,7 +2,6 @@ package no.nav.oebs.restapi.api.vieri.leverandorinfovieri.v1;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.oebs.restapi.Application;
 import no.nav.oebs.restapi.api.common.swagger.VieriSwagger;
 import no.nav.security.token.support.core.api.Protected;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,7 +25,7 @@ import java.util.Collections;
 @Tag(name = SwaggerConfig.VIERI, description = "Vieri API")
 public class LeverandorinfoControllerVieri {
 
-	private static final Logger logger = LoggerFactory.getLogger(Application.class);
+	private static final Logger logger = LoggerFactory.getLogger(LeverandorinfoControllerVieri.class);
 
 	@Value("${vieri.api.loadsuppliers}")
 	private String apiLoadSuppliers;
@@ -43,7 +42,7 @@ public class LeverandorinfoControllerVieri {
 	@PostMapping(path = "/leverandorinfo-vieri")
 	@VieriSwagger
 	public String finnLeverandortransaksjoner(
-			@RequestParam(name="org id", defaultValue = "202") Integer org_id,
+			@RequestParam(name="org id", defaultValue = "202") Integer orgid,
 			@RequestParam(name="leverandornavn", required = false)
 				@Parameter(description = "f.eks. BOUVET ASA") String leverandornavn,
 			@RequestParam(name = "leverandornummer", required = false)
@@ -64,7 +63,7 @@ public class LeverandorinfoControllerVieri {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		headers.set("Ocp-Apim-Subscription-Key", ocpApiManagement);
 
-		String lev = serviceLev.finnLeverandortransaksjoner(org_id, leverandornavn, leverandornummer, leverandorsted, lastupdatedate);
+		String lev = serviceLev.finnLeverandortransaksjoner(orgid, leverandornavn, leverandornummer, leverandorsted, lastupdatedate);
 
 		HttpEntity<String> entity = new HttpEntity<>(lev, headers);
 
