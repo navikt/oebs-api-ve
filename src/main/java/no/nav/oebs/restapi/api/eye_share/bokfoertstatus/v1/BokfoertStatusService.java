@@ -16,25 +16,25 @@ public class BokfoertStatusService extends ObjektMaps {
 
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_bokfoertstatus";
 
-	private PlsqlProcedureRepository plsqlProcedureRepository;
+	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
 	public BokfoertStatusService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
 
-	public String finnBokfoertStatus(Integer p_org_id, String p_eyeshare_dok_id) {
+	public String finnBokfoertStatus(Integer pOrgId, String pEyeshareDokId) {
 
-		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(p_org_id, p_eyeshare_dok_id));
+		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(pOrgId, pEyeshareDokId));
 
 		return result.getData();
 
 	}
 
-	private BokfoertStatusRequest buildRequest(Integer p_org_id, String p_eyeshare_dok_id) {
+	private BokfoertStatusRequest buildRequest(Integer pOrgId, String pEyeshareDokId) {
 		return BokfoertStatusRequest.builder() //
-				.p_org_id(p_org_id) //
-				.p_eyeshare_dok_id(p_eyeshare_dok_id) //
+				.p_org_id(pOrgId) //
+				.p_eyeshare_dok_id(pEyeshareDokId) //
 				.build();
 	}
 

@@ -2,7 +2,6 @@ package no.nav.oebs.restapi.api.vieri.konteringsinfohbvieri.v1;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.oebs.restapi.Application;
 import no.nav.oebs.restapi.api.common.swagger.VieriSwagger;
 import no.nav.security.token.support.core.api.Protected;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ import java.util.Collections;
 @Tag(name = SwaggerConfig.VIERI, description = "Vieri API")
 public class KonteringsrinfoHbControllerVieri {
 
-	private static final Logger logger = LoggerFactory.getLogger(Application.class);
+	private static final Logger logger = LoggerFactory.getLogger(KonteringsrinfoHbControllerVieri.class);
 
 	@Value("${vieri.api.loadaccounts}")
 	private String apiLoadAccounts;
@@ -43,8 +42,8 @@ public class KonteringsrinfoHbControllerVieri {
 	@Protected
 	@PostMapping(path = "/konteringsinfo-hb-vieri")
 	@VieriSwagger
-	public String hentKonteringsinfo_hb(
-		@RequestParam(name="org id", defaultValue = "202") Integer org_id,
+	public String hentkonteringsinfoHb(
+		@RequestParam(name="org id", defaultValue = "202") Integer orgid,
 		@RequestParam(name="segmentnavn", required = false)
 		@Parameter(description = "f.eks. OR_ART") String segmentname,
 		@RequestParam(name="segmentverdi", required = false)
@@ -62,15 +61,15 @@ public class KonteringsrinfoHbControllerVieri {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		headers.set("Ocp-Apim-Subscription-Key", ocpApiManagement);
 
-		String kont_hb = serviceKont.finnKonteringsinfoHbVieritransaksjoner(org_id, segmentname, segmentverdi, lastupdatedate);
+		String konthb = serviceKont.finnKonteringsinfoHbVieritransaksjoner(orgid, segmentname, segmentverdi, lastupdatedate);
 
-		HttpEntity<String> entity = new HttpEntity<>(kont_hb, headers);
+		HttpEntity<String> entity = new HttpEntity<>(konthb, headers);
 
 		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 
 		if (response.getStatusCode() == HttpStatus.OK) {
 			logger.info("200 OK: {}", response.getBody());
-			return kont_hb;
+			return konthb;
 		} else {
 			logger.info("{}", response.getStatusCode());
 			return "request failet";

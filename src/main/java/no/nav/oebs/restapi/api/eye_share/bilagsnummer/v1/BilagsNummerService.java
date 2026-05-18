@@ -16,23 +16,23 @@ public class BilagsNummerService extends ObjektMaps {
 
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_bilagsnummer";
 
-	private PlsqlProcedureRepository plsqlProcedureRepository;
+	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
 	public BilagsNummerService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
 
-	public String finnBilagsNummer(Integer org_id, String esguid) {
+	public String finnBilagsNummer(Integer orgid, String esguid) {
 
-		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(org_id, esguid));
+		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(orgid, esguid));
 
 		return result.getData();
 	}
 
-	private BilagsNummerRequest buildRequest(Integer org_id, String esguid) {
+	private BilagsNummerRequest buildRequest(Integer orgid, String esguid) {
 		return BilagsNummerRequest.builder() //
-				.org_id(org_id) //
+				.org_id(orgid) //
 				.esguid(esguid) //
 				.build();
 	}

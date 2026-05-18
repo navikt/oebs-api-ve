@@ -1,20 +1,35 @@
 
 server:
   port: 8080
+  error:
+    include-stacktrace: on_param
 
 spring:
   profiles:
-     active: nais
+    active: ${SPRING_PROFILES_ACTIVE}
+  application:
+    name: ${APP_NAME}
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+    hikari:
+      maximum-pool-size: 60
+      minimum-idle: 20
+
   jpa:
     hibernate:
       ddl-auto: none
-    #properties:
-    #  hibernate:
-    #    dialect: org.hibernate.dialect.Oracle12cDialect
     show-sql: false
     open-in-view: false
+
+no.nav.security.jwt:
+  issuer:
+    azure:
+      accepted_audience: ${AZURE_APP_CLIENT_ID}
+      discoveryurl:  ${AZURE_APP_WELL_KNOWN_URL}
+      proxyurl: http://webproxy-nais.nav.no:8088
 
 management:
   endpoints:
@@ -29,6 +44,19 @@ springdoc:
   swagger-ui:
     disable-swagger-default-url: true
     tags-sorter: alpha
+
+vieri:
+  api:
+    loadaccounts: ${VIERI_LOAD_ACCOUNTS}
+    loadsuppliers: ${VIERI_LOAD_SUPPLIERS}
+    loaddimensions: ${VIERI_LOAD_DIMENTIONS}
+  ocp:
+    management: ${VIERI_OCP_MANAGEMENT}
+
+oebs:
+  environment: OEBSP
+  version: 0.7.1
+  date: 05.05.2026
 
 # logging:
 #  level:

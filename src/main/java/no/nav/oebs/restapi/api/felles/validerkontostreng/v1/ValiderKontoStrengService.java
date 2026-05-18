@@ -19,14 +19,14 @@ public class ValiderKontoStrengService extends ObjektMaps {
 
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kstreng";
 
-	private PlsqlProcedureRepository plsqlProcedureRepository;
+	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
 	public ValiderKontoStrengService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
 
-	public String finnValiderKontoStreng(Integer org_id,
+	public String finnValiderKontoStreng(Integer orgid,
 			   String artskonto,
 			   String ksted,
 			   String produktoppgave,
@@ -35,13 +35,13 @@ public class ValiderKontoStrengService extends ObjektMaps {
 			   String statskonto,
 			   String kilde,
 			   String tilsagnsaar,
-			   String fritt_felt_1,
-			   String fritt_felt_2,
+			   String frittfelt1,
+			   String frittfelt2,
 			   String fullmaktskode,
 			   String regnskapsforer,
 			   String system) {
 
-		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(org_id,
+		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(orgid,
 				artskonto,
 				ksted,
 				produktoppgave,
@@ -50,8 +50,8 @@ public class ValiderKontoStrengService extends ObjektMaps {
 				statskonto,
 				kilde,
 				tilsagnsaar,
-				fritt_felt_1,
-				fritt_felt_2,
+				frittfelt1,
+				frittfelt2,
 				fullmaktskode,
 				regnskapsforer,
 				system));
@@ -60,7 +60,7 @@ public class ValiderKontoStrengService extends ObjektMaps {
 
 		}
 
-	private ValiderKontoStrengRequest buildRequest(Integer org_id,
+	private ValiderKontoStrengRequest buildRequest(Integer orgid,
                                                    String artskonto,
                                                    String ksted,
                                                    String produktoppgave,
@@ -69,13 +69,13 @@ public class ValiderKontoStrengService extends ObjektMaps {
                                                    String statskonto,
                                                    String kilde,
                                                    String tilsagnsaar,
-                                                   String fritt_felt_1,
-                                                   String fritt_felt_2,
+                                                   String frittfelt1,
+                                                   String frittfelt2,
                                                    String fullmaktskode,
                                                    String regnskapsforer,
                                                    String system) {
 		return ValiderKontoStrengRequest.builder()
-				.org_id(org_id)
+				.org_id(orgid)
 				.artskonto(artskonto)
 				.ksted(ksted)
 				.produktoppgave(produktoppgave)
@@ -84,8 +84,8 @@ public class ValiderKontoStrengService extends ObjektMaps {
 			 	.statskonto(statskonto)
 				.kilde(kilde)
 				.tilsagnsaar(tilsagnsaar)
-				.fritt_felt_1(fritt_felt_1)
-				.fritt_felt_2(fritt_felt_2)
+				.fritt_felt_1(frittfelt1)
+				.fritt_felt_2(frittfelt2)
 				.fullmaktskode(fullmaktskode)
 				.regnskapsforer(regnskapsforer)
 				.system(system)
