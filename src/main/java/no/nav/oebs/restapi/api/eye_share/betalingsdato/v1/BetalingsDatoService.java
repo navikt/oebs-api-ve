@@ -16,22 +16,22 @@ public class BetalingsDatoService extends ObjektMaps {
 
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_betalingsdato";
 
-	private PlsqlProcedureRepository plsqlProcedureRepository;
+	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
 	public BetalingsDatoService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
 
-	public String finnBetalingsDato(Integer org_id, String esguid) {
+	public String finnBetalingsDato(Integer orgid, String esguid) {
 
-		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(org_id, esguid));
+		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(orgid, esguid));
 		return result.getData();
 	}
 
-	private BetalingsDatoRequest buildRequest(Integer org_id, String esguid) {
+	private BetalingsDatoRequest buildRequest(Integer orgid, String esguid) {
 		return BetalingsDatoRequest.builder() //
-				.org_id(org_id) //
+				.org_id(orgid) //
 				.esguid(esguid) //
 				.build();
 	}
