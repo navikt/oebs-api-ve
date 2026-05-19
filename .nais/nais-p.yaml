@@ -14,7 +14,7 @@ spec:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
   replicas:
-    min: 3
+    min: 2
     max: 3
     cpuThresholdPercentage: 50
   liveness:
