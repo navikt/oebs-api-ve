@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: oebs-api-ve
+
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+
+no.nav.security.jwt:
+  issuer:
+    azure:
+      accepted_audience: 1243
+      proxyurl:
+
+vieri:
+  api:
+    loadaccounts: https://mock-vieri.net/LoadSuppliers
+    loadsuppliers: https://mock-vieri.net/LoadSuppliers
+    loaddimensions: https://mock-vieri.net/LoadSuppliers
+  ocp:
+    management: 123456
+
+oebs:
+  environment: OEBSP
+  version: 0.7.1
+  date: 05.05.2026
