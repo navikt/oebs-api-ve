@@ -34,6 +34,10 @@ spec:
     limits:
       cpu: 4000m
       memory: 2048Mi
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
   azure:
     application:
       enabled: true
