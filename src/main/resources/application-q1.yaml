@@ -1,7 +1,3 @@
-spring:
-  application:
-    name: oebs-api-ve-q1
-
 oebs:
   environment: OEBSQ1
   version: 0.6.9
