@@ -42,7 +42,7 @@ public class HttpLoggingFilter extends OncePerRequestFilter {
 
 		HttpServletRequest requestToUse = request;
 		if (!(request instanceof ContentCachingRequestWrapper)) {
-			requestToUse = new ContentCachingRequestWrapper(request,10 );
+			requestToUse = new ContentCachingRequestWrapper(request, -1 );
 		}
 
 		HttpServletResponse responseToUse = response;

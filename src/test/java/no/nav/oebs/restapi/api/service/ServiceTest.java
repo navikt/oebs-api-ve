@@ -38,7 +38,6 @@ public class ServiceTest {
     private PlsqlProcedureRepository plsqlProcedureRepository;
 
     private final JsonMapper jsonMapper = new JsonMapper();
-            //.registerModule(new JavaTimeModule());
 
     private PlsqlProcedureResult resultWithData(String data) {
         return new PlsqlProcedureResult(data, PlsqlMessageCodes.OK, "OK");
