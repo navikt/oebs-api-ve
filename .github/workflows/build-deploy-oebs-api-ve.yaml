@@ -90,7 +90,7 @@ jobs:
   deploy-q1:
     name: Deploy q1 instance
     needs: [build, deploy-t1, deploy-u1]
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy_q1 == true
+    if: github.event_name != 'pull_request' && github.ref_name == 'main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
