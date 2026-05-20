@@ -8,7 +8,8 @@ import no.nav.oebs.restapi.db.repository.PlsqlProcedureRepository;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+
 
 @Slf4j
 @Service
@@ -17,7 +18,7 @@ public class KonteringsinfoServiceVieri extends ObjektMaps {
 
 	private final PlsqlProcedureRepository plsqlProcedureRepository;
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kont_info_vieri";
-	public KonteringsinfoServiceVieri(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
+	public KonteringsinfoServiceVieri(PlsqlProcedureRepository plsqlProcedureRepository, JsonMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}

@@ -1,6 +1,5 @@
 package no.nav.oebs.restapi.api.eye_share.bestillingsinfo.v1;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import no.nav.oebs.restapi.api.eye_share.bestillingsinfo.v1.model.BestillingsRequest;
 import no.nav.oebs.restapi.api.common.utils.ObjektMaps;
@@ -8,6 +7,7 @@ import no.nav.oebs.restapi.db.repository.PlsqlProcedureRepository;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.json.JsonMapper;
 
 
 @Slf4j
@@ -19,7 +19,7 @@ public class BestillingsinfoService extends ObjektMaps {
 
 	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
-	public BestillingsinfoService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
+	public BestillingsinfoService(PlsqlProcedureRepository plsqlProcedureRepository, JsonMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}

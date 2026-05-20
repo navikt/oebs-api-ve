@@ -8,7 +8,8 @@ import no.nav.oebs.restapi.db.repository.PlsqlProcedureRepository;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+
 
 @Slf4j
 @Service
@@ -18,7 +19,7 @@ public class LeverandorinfoServiceVieri extends ObjektMaps {
 
 	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
-	public LeverandorinfoServiceVieri(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
+	public LeverandorinfoServiceVieri(PlsqlProcedureRepository plsqlProcedureRepository, JsonMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
