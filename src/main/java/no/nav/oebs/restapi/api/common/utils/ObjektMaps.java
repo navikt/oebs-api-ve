@@ -1,27 +1,27 @@
 package no.nav.oebs.restapi.api.common.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import no.nav.oebs.restapi.db.repository.PlsqlMessageCodes;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureResult;
 import no.nav.oebs.restapi.exception.JsonMappingException;
 import no.nav.oebs.restapi.exception.TechnicalPlsqlException;
 import no.nav.oebs.restapi.exception.UgyldigInputException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * Superklasse med felles funksjonalitet for implementasjon av tjenestespesifikke Service-klasser.
  */
 public class ObjektMaps {
 
-	private ObjectMapper objectMapper;
+	private JsonMapper jsonMapper;
 
 	protected ObjektMaps() {
 	}
 
-	protected ObjektMaps(ObjectMapper objectMapper) {
-		this.objectMapper = objectMapper;
+	protected ObjektMaps(JsonMapper jsonMapper) {
+		this.jsonMapper = jsonMapper;
 	}
 
 	/**
@@ -41,8 +41,8 @@ public class ObjektMaps {
 	 */
 	protected <T> String toJson(T object) {
 		try {
-			return objectMapper.writeValueAsString(object);
-		} catch (JsonProcessingException e) {
+			return jsonMapper.writeValueAsString(object);
+		} catch (JacksonException e) {
 			throw new JsonMappingException(e);
 		}
 	}
@@ -52,8 +52,8 @@ public class ObjektMaps {
 	 */
 	protected <T> T toObject(String json, Class<T> valueType) {
 		try {
-			return objectMapper.readValue(json, valueType);
-		} catch (JsonProcessingException e) {
+			return jsonMapper.readValue(json, valueType);
+		} catch (JacksonException e) {
 			throw new JsonMappingException(e);
 		}
 	}
@@ -64,8 +64,8 @@ public class ObjektMaps {
 	 */
 	protected <T> T toObject(String json, TypeReference<T> objectTypeRef) {
 		try {
-			return objectMapper.readValue(json, objectTypeRef);
-		} catch (JsonProcessingException e) {
+			return jsonMapper.readValue(json, objectTypeRef);
+		} catch (JacksonException e) {
 			throw new JsonMappingException(e);
 		}
 	}

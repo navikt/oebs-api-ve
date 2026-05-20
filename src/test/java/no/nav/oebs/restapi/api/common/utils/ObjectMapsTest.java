@@ -1,7 +1,5 @@
 package no.nav.oebs.restapi.api.common.utils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import no.nav.oebs.restapi.db.repository.PlsqlMessageCodes;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureResult;
 import no.nav.oebs.restapi.exception.JsonMappingException;
@@ -10,6 +8,8 @@ import no.nav.oebs.restapi.exception.UgyldigInputException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -20,8 +20,8 @@ class ObjectMapsTest {
 
     // Concrete subclass to expose protected methods for testing
     private static class TestObjektMaps extends ObjektMaps {
-        TestObjektMaps(ObjectMapper objectMapper) {
-            super(objectMapper);
+        TestObjektMaps(JsonMapper jsonMapper) {
+            super(jsonMapper);
         }
 
         @Override
@@ -49,7 +49,7 @@ class ObjectMapsTest {
 
     @BeforeEach
     void setUp() {
-        objektMaps = new TestObjektMaps(new ObjectMapper());
+        objektMaps = new TestObjektMaps(new JsonMapper());
     }
 
     @Nested

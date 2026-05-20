@@ -1,7 +1,5 @@
 package no.nav.oebs.restapi.api.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import no.nav.oebs.restapi.api.eye_share.bestillingsinfo.v1.BestillingsinfoService;
 import no.nav.oebs.restapi.api.eye_share.betalingsdato.v1.BetalingsDatoService;
 import no.nav.oebs.restapi.api.eye_share.bilagsnummer.v1.BilagsNummerService;
@@ -24,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.time.LocalDate;
 
@@ -38,8 +37,7 @@ public class ServiceTest {
     @Mock
     private PlsqlProcedureRepository plsqlProcedureRepository;
 
-    private final ObjectMapper objectMapper = new ObjectMapper()
-            .registerModule(new JavaTimeModule());
+    private final JsonMapper jsonMapper = new JsonMapper();
 
     private PlsqlProcedureResult resultWithData(String data) {
         return new PlsqlProcedureResult(data, PlsqlMessageCodes.OK, "OK");
@@ -58,7 +56,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new BestillingsinfoService(plsqlProcedureRepository, objectMapper);
+            service = new BestillingsinfoService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -102,7 +100,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new BetalingsDatoService(plsqlProcedureRepository, objectMapper);
+            service = new BetalingsDatoService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -136,7 +134,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new BilagsNummerService(plsqlProcedureRepository, objectMapper);
+            service = new BilagsNummerService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -170,7 +168,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new BokfoertStatusService(plsqlProcedureRepository, objectMapper);
+            service = new BokfoertStatusService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -204,7 +202,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new FakturaInfoService(plsqlProcedureRepository, objectMapper);
+            service = new FakturaInfoService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -266,7 +264,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new KonteringsinfoService(plsqlProcedureRepository, objectMapper);
+            service = new KonteringsinfoService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -310,7 +308,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new ValiderKontoStrengService(plsqlProcedureRepository, objectMapper);
+            service = new ValiderKontoStrengService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -358,7 +356,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new LeverandorinfoService(plsqlProcedureRepository, objectMapper);
+            service = new LeverandorinfoService(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -412,7 +410,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new KonteringsinfoHbServiceVieri(plsqlProcedureRepository, objectMapper);
+            service = new KonteringsinfoHbServiceVieri(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -456,7 +454,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new KonteringsinfoServiceVieri(plsqlProcedureRepository, objectMapper);
+            service = new KonteringsinfoServiceVieri(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test
@@ -500,7 +498,7 @@ public class ServiceTest {
 
         @BeforeEach
         void setUp() {
-            service = new LeverandorinfoServiceVieri(plsqlProcedureRepository, objectMapper);
+            service = new LeverandorinfoServiceVieri(plsqlProcedureRepository, jsonMapper);
         }
 
         @Test

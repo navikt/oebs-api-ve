@@ -1,14 +1,13 @@
 package no.nav.oebs.restapi.api.eye_share.fakturainfo.v1;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.oebs.restapi.api.eye_share.fakturainfo.v1.model.FakturaInfoRequest;
 import no.nav.oebs.restapi.api.common.utils.ObjektMaps;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureRepository;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureResult;
 import no.nav.oebs.restapi.exception.TechnicalPlsqlException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.json.JsonMapper;
 
 @Slf4j
 @Service
@@ -19,7 +18,7 @@ public class FakturaInfoService extends ObjektMaps {
 
 	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
-	public FakturaInfoService(PlsqlProcedureRepository plsqlProcedureRepository, ObjectMapper objectMapper) {
+	public FakturaInfoService(PlsqlProcedureRepository plsqlProcedureRepository, JsonMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
