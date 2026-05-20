@@ -36,7 +36,6 @@
         <!-- NAV artifacts -->
         <token-validation.version>5.0.30</token-validation.version>
         <logstash-logback-encoder.version>8.0</logstash-logback-encoder.version>
-        <nimbus-jose-jwt.version>10.0.2</nimbus-jose-jwt.version>
         <springdoc-openapi.version>2.7.0</springdoc-openapi.version>
         <lombok.version>1.18.46</lombok.version>
         <jacoco.version>0.8.14</jacoco.version>
@@ -144,13 +143,6 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-reactive-httpclient</artifactId>
-        </dependency>
-
-        <!-- Nimbus JWT support -->
-        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>${nimbus-jose-jwt.version}</version>
         </dependency>
 
         <!-- Commons -->
