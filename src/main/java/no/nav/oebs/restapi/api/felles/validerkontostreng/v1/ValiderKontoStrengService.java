@@ -74,7 +74,7 @@ public class ValiderKontoStrengService extends ObjektMaps {
                                                    String regnskapsforer,
                                                    String system) {
 		return ValiderKontoStrengRequest.builder()
-				.org_id(orgid)
+				.orgid(orgid)
 				.artskonto(artskonto)
 				.ksted(ksted)
 				.produktoppgave(produktoppgave)
@@ -83,8 +83,8 @@ public class ValiderKontoStrengService extends ObjektMaps {
 			 	.statskonto(statskonto)
 				.kilde(kilde)
 				.tilsagnsaar(tilsagnsaar)
-				.fritt_felt_1(frittfelt1)
-				.fritt_felt_2(frittfelt2)
+				.frittfelt1(frittfelt1)
+				.frittfelt2(frittfelt2)
 				.fullmaktskode(fullmaktskode)
 				.regnskapsforer(regnskapsforer)
 				.system(system)

@@ -33,8 +33,8 @@ public class BokfoertStatusService extends ObjektMaps {
 
 	private BokfoertStatusRequest buildRequest(Integer pOrgId, String pEyeshareDokId) {
 		return BokfoertStatusRequest.builder() //
-				.p_org_id(pOrgId) //
-				.p_eyeshare_dok_id(pEyeshareDokId) //
+				.pOrgid(pOrgId) //
+				.pEyeshareDokid(pEyeshareDokId) //
 				.build();
 	}
 

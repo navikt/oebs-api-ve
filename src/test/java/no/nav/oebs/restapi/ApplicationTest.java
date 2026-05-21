@@ -11,6 +11,5 @@ class ApplicationTest {
 
 	@Test
 	void applicationContextShouldLoad() {
-
 	}
 }

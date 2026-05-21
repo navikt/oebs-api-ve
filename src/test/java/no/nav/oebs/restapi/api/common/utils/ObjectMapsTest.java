@@ -58,7 +58,7 @@ class ObjectMapsTest {
         @Test
         void throwPlsqlException_withFeilIInput_throwsUgyldigInputException() {
             PlsqlProcedureResult result = new PlsqlProcedureResult(
-                    (String) null, PlsqlMessageCodes.FEIL_I_INPUT, "Invalid input");
+                    null, PlsqlMessageCodes.FEIL_I_INPUT, "Invalid input");
 
             assertThrows(UgyldigInputException.class, () ->
                     objektMaps.throwPlsqlException(result));
@@ -67,7 +67,7 @@ class ObjectMapsTest {
         @Test
         void throwPlsqlException_withOtherErrorCode_throwsTechnicalPlsqlException() {
             PlsqlProcedureResult result = new PlsqlProcedureResult(
-                    (String) null, PlsqlMessageCodes.EXCEPTION, "Technical error");
+                    null, PlsqlMessageCodes.EXCEPTION, "Technical error");
 
             assertThrows(TechnicalPlsqlException.class, () ->
                     objektMaps.throwPlsqlException(result));
@@ -77,7 +77,7 @@ class ObjectMapsTest {
         void throwPlsqlException_withUgyldigInputException_containsMessage() {
             String errorMessage = "Bad input value";
             PlsqlProcedureResult result = new PlsqlProcedureResult(
-                    (String) null, PlsqlMessageCodes.FEIL_I_INPUT, errorMessage);
+                    null, PlsqlMessageCodes.FEIL_I_INPUT, errorMessage);
 
             UgyldigInputException ex = assertThrows(UgyldigInputException.class, () ->
                     objektMaps.throwPlsqlException(result));
@@ -133,8 +133,12 @@ class ObjectMapsTest {
 
         @Test
         void toObject_withInvalidJson_throwsJsonMappingException() {
-            assertThrows(JsonMappingException.class, () ->
-                    objektMaps.toObject("not-valid-json", Map.class));
+            try {
+                objektMaps.toObject("not-valid-json", Map.class);
+                fail("Expected JsonMappingException to be thrown");
+            } catch (JsonMappingException e) {
+                // Expected exception, test passes
+            }
         }
     }
 
@@ -145,17 +149,19 @@ class ObjectMapsTest {
         void toObject_withTypeReference_returnsList() {
             String json = "[\"a\",\"b\",\"c\"]";
 
-            List<String> result = objektMaps.toObject(json, new TypeReference<List<String>>() {});
+            List<String> result = objektMaps.toObject(json, new TypeReference<>() {});
 
             assertNotNull(result);
             assertEquals(3, result.size());
-            assertEquals("a", result.get(0));
+            assertEquals("a", result.getFirst());
         }
 
         @Test
         void toObject_withInvalidJson_throwsJsonMappingException() {
+            TypeReference<List<String>> typeReference = new TypeReference<>() {};
+
             assertThrows(JsonMappingException.class, () ->
-                    objektMaps.toObject("not-valid-json", new TypeReference<List<String>>() {}));
+                    objektMaps.toObject("not-valid-json", typeReference));
         }
     }
 }
