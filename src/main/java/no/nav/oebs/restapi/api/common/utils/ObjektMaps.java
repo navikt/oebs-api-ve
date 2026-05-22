@@ -28,10 +28,9 @@ public class ObjektMaps {
 	 * Kaster exception iht. feilkoden returnert fra PL/SQL-prosedyren.
 	 */
 	protected void throwPlsqlException(PlsqlProcedureResult result) {
-		switch (result.getMessageNumber()) {
-		case PlsqlMessageCodes.FEIL_I_INPUT:
+		if (result.getMessageNumber().equals(PlsqlMessageCodes.FEIL_I_INPUT)) {
 			throw new UgyldigInputException(result.getMessage());
-		default:
+		} else {
 			throw new TechnicalPlsqlException(result.getMessageNumber(), result.getMessage());
 		}
 	}

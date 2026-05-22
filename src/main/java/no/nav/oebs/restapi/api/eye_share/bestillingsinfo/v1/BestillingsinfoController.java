@@ -2,12 +2,9 @@ package no.nav.oebs.restapi.api.eye_share.bestillingsinfo.v1;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.oebs.restapi.Application;
 import no.nav.oebs.restapi.api.common.swagger.EyeShareSwagger;
 import no.nav.oebs.restapi.config.SwaggerConfig;
 import no.nav.security.token.support.core.api.Protected;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +20,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 @Tag(name = SwaggerConfig.EYESHARE, description = "Eye-Share")
 public class BestillingsinfoController {
 
-	private static final Logger logger = LoggerFactory.getLogger(Application.class);
-
-	private BestillingsinfoService service;
-	// private LocalDate lastupdatedate;
+	private final BestillingsinfoService service;
 
 	public BestillingsinfoController(BestillingsinfoService service) { //,
 			this.service = service;
@@ -36,10 +30,10 @@ public class BestillingsinfoController {
 	@GetMapping(path = "/bestillingsinfo")
 	@EyeShareSwagger
 	public String finnBestillingstransaksjoner(
-			@RequestParam(name = "org_id", defaultValue = "202") Integer org_id,
-			@RequestParam(name = "po_number") @Parameter(description = "f.eks. 3170085") String po_number)
+			@RequestParam(name = "org_id", defaultValue = "202") Integer orgid,
+			@RequestParam(name = "po_number") @Parameter(description = "f.eks. 3170085") String ponumber)
 			{
 
-		return service.finnBestillingstransaksjoner(org_id, po_number);
+		return service.finnBestillingstransaksjoner(orgid, ponumber);
 	}
 }

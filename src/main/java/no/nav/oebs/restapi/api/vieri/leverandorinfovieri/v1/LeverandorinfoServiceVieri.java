@@ -39,7 +39,7 @@ public class LeverandorinfoServiceVieri extends ObjektMaps {
 	private LevRequest buildRequest(Integer orgid, String leverandornavn,
 												String leverandornummer, String leverandorsted, LocalDate lastupdatedate) {
 		return LevRequest.builder()
-				.org_id(orgid) //
+				.orgid(orgid) //
 				.leverandornavn(leverandornavn) //
 				.leverandornummer(leverandornummer) //
 				.leverandorsted(leverandorsted) //

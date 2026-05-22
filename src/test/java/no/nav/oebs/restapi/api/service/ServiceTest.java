@@ -44,7 +44,7 @@ public class ServiceTest {
     }
 
     private PlsqlProcedureResult resultWithError(int messageNumber, String message) {
-        return new PlsqlProcedureResult((String) null, messageNumber, message);
+        return new PlsqlProcedureResult(null, messageNumber, message);
     }
 
     // -------------------------------------------------------------------------
@@ -229,7 +229,7 @@ public class ServiceTest {
         @Test
         void lagreFaktura_withSuccessResult_returnsMessage() {
             when(plsqlProcedureRepository.executeInOutProcedure(any(), any()))
-                    .thenReturn(new PlsqlProcedureResult((String) null, PlsqlMessageCodes.OK, "Lagret OK"));
+                    .thenReturn(new PlsqlProcedureResult( null, PlsqlMessageCodes.OK, "Lagret OK"));
 
             String result = service.lagreFaktura("{\"faktura\":\"data\"}");
 
@@ -536,9 +536,9 @@ public class ServiceTest {
         void finnLeverandortransaksjoner_withNegativeMessageNumber_throwsPlsqlException() {
             when(plsqlProcedureRepository.executeInOutProcedure(any(), any()))
                     .thenReturn(resultWithError(PlsqlMessageCodes.EXCEPTION, "DB error"));
-
+            LocalDate now = LocalDate.now();
             assertThrows(TechnicalPlsqlException.class, () ->
-                    service.finnLeverandortransaksjoner(202, "Navn AS", "12345", "Oslo", LocalDate.now()));
+                    service.finnLeverandortransaksjoner(202, "Navn AS", "12345", "Oslo", now));
         }
 
         @Test
@@ -546,8 +546,9 @@ public class ServiceTest {
             when(plsqlProcedureRepository.executeInOutProcedure(any(), any()))
                     .thenReturn(resultWithError(PlsqlMessageCodes.FEIL_I_INPUT, "Invalid input"));
 
+            LocalDate now = LocalDate.now();
             assertThrows(UgyldigInputException.class, () ->
-                    service.finnLeverandortransaksjoner(202, "Navn AS", "12345", "Oslo", LocalDate.now()));
+                    service.finnLeverandortransaksjoner(202, "Navn AS", "12345", "Oslo", now));
         }
     }
 }

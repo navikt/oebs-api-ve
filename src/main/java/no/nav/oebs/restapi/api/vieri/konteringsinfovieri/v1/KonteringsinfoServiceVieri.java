@@ -33,7 +33,7 @@ public class KonteringsinfoServiceVieri extends ObjektMaps {
 
 	private KontRequest buildRequest(Integer orgid, String segmentname, String segmentverdi, LocalDate lastupdatedate) {
 		return KontRequest.builder()
-				.org_id(orgid) //
+				.orgid(orgid) //
 				.segmentname(segmentname) //
 				.segmentverdi(segmentverdi) //
 				.lastupdatedate(lastupdatedate) //

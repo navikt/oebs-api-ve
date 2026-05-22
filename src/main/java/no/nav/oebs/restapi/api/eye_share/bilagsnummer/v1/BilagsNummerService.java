@@ -32,7 +32,7 @@ public class BilagsNummerService extends ObjektMaps {
 
 	private BilagsNummerRequest buildRequest(Integer orgid, String esguid) {
 		return BilagsNummerRequest.builder() //
-				.org_id(orgid) //
+				.orgid(orgid) //
 				.esguid(esguid) //
 				.build();
 	}

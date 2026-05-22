@@ -1,10 +1,7 @@
 package no.nav.oebs.restapi.api.eye_share.konteringsinfo.v1;
 
 import java.time.LocalDate;
-
 import lombok.extern.slf4j.Slf4j;
-
-
 import no.nav.oebs.restapi.api.common.utils.ObjektMaps;
 import no.nav.oebs.restapi.api.common.model.KontRequest;
 import no.nav.oebs.restapi.db.repository.PlsqlProcedureRepository;
@@ -20,26 +17,26 @@ public class KonteringsinfoService extends ObjektMaps {
 
 	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_hent_segmenter";
 
-	private PlsqlProcedureRepository plsqlProcedureRepository;
+	private final PlsqlProcedureRepository plsqlProcedureRepository;
 
 	public KonteringsinfoService(PlsqlProcedureRepository plsqlProcedureRepository, JsonMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
 	}
 
-	public String finnKonteringstransaksjoner(Integer org_id, String segmentname,
+	public String finnKonteringstransaksjoner(Integer orgid, String segmentname,
 											  String segmentverdi, LocalDate lastupdatedate) {
 
 
-		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(org_id, segmentname, segmentverdi, lastupdatedate));
+		PlsqlProcedureResult result = executePlsqlProcedure(buildRequest(orgid, segmentname, segmentverdi, lastupdatedate));
 
 		return result.getData();
 
 	}
 
-	private KontRequest buildRequest(Integer org_id, String segmentname, String segmentverdi, LocalDate lastupdatedate) {
+	private KontRequest buildRequest(Integer orgid, String segmentname, String segmentverdi, LocalDate lastupdatedate) {
 		return KontRequest.builder() //
-				.org_id(org_id) //
+				.orgid(orgid) //
 				.segmentname(segmentname) //
 				.segmentverdi(segmentverdi)
 				.lastupdatedate(lastupdatedate) //

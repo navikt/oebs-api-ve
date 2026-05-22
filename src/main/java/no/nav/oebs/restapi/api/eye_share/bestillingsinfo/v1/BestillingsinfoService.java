@@ -35,8 +35,8 @@ public class BestillingsinfoService extends ObjektMaps {
 	 */
 	private BestillingsRequest buildRequest(Integer orgid, String poNumber) {
 		return BestillingsRequest.builder() //
-				.org_id(orgid) //
-				.po_number(poNumber) //
+				.orgid(orgid) //
+				.ponumber(poNumber) //
 				.build();
 	}
 

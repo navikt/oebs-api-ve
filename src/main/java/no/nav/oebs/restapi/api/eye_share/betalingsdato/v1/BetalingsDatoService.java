@@ -31,7 +31,7 @@ public class BetalingsDatoService extends ObjektMaps {
 
 	private BetalingsDatoRequest buildRequest(Integer orgid, String esguid) {
 		return BetalingsDatoRequest.builder() //
-				.org_id(orgid) //
+				.orgid(orgid) //
 				.esguid(esguid) //
 				.build();
 	}
