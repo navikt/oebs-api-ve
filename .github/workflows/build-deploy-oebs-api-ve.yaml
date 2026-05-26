@@ -53,8 +53,8 @@ jobs:
         with:
           team: team-oebs
 
-  deploy-t1:
-    name: Deploy t1 instance
+  deploy-u1:
+    name: Deploy u1 instance
     needs: build
     if: github.event_name != 'pull_request' && github.ref_name == 'main'
     runs-on: ubuntu-latest
@@ -67,12 +67,12 @@ jobs:
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-fss
-          RESOURCE: .nais/nais-t1.yaml
+          RESOURCE: .nais/nais-u1.yaml
           VAR: image=${{ needs.build.outputs.image }}
 
-  deploy-u1:
-    name: Deploy u1 instance
-    needs: [build, deploy-t1]
+  deploy-t1:
+    name: Deploy t1 instance
+    needs: [build, deploy-u1]
     if: github.event_name != 'pull_request' && github.ref_name == 'main'
     runs-on: ubuntu-latest
     permissions:
@@ -84,7 +84,7 @@ jobs:
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-fss
-          RESOURCE: .nais/nais-u1.yaml
+          RESOURCE: .nais/nais-t1.yaml
           VAR: image=${{ needs.build.outputs.image }}
 
   deploy-q1:
