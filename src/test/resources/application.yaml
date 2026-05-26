@@ -1,8 +1,3 @@
-server:
-  port: 8080
-  error:
-    include-stacktrace: on_param
-
 spring:
   application:
     name: oebs-api-ve
@@ -23,30 +18,6 @@ spring:
         dialect: org.hibernate.dialect.OracleDialect
     show-sql: true
     open-in-view: false
-
-no:
-  nav:
-    security:
-      jwt:
-        issuer:
-          azure:
-            accepted_audience: test-audience
-            discoveryurl: http://localhost/test/.well-known/openid-configuration
-            proxyurl:
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, prometheus, metrics
-
-springdoc:
-  packagesToScan: no.nav.oebs.restapi.api
-  override-with-generic-response: false
-  remove-broken-reference-definitions: false
-  swagger-ui:
-    disable-swagger-default-url: true
-    tags-sorter: alpha
 
 vieri:
   api:

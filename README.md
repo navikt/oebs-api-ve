@@ -1,37 +1,17 @@
 # oebs-api-ve
 
-REST API service that integrates OEBS (Oracle E-Business Suite) with Eye-Share and Vieri. The service exposes PL/SQL stored procedures from OEBS as REST endpoints, enabling external systems to query and push data related to invoices, purchase orders, accounting entries, and supplier information.
+REST API service that integrates OEBS (Oracle E-Business Suite) with Eye-Share and Vieri. The service exposes PL/SQL stored procedures from OEBS as REST endpoints, enabling querying and pushing data related to invoices, purchase orders, accounting entries, and supplier information.
+OEBS uses the API to post data to Vieri, and Eye-Share uses it to fetch data from OEBS.
 
 ---
 
 ## Architecture
+![Service-illustration](docs/service-illustration.png)
 
-```
-Eye-Share                        Vieri
-    │                               │
-    │  GET/POST /api/v1/...         │  POST /api/v1/...vieri
-    ▼                               ▼
-┌──────────────────────────────────────────┐
-│              oebs-api-ve                 │
-│  Spring Boot REST API (Java 21)          │
-│                                          │
-│  Controllers → Services → Repository    │
-│                    │                     │
-│           PL/SQL Procedure calls         │
-└──────────────────────────────────────────┘
-                     │
-                     ▼
-             ┌───────────────┐
-             │  OEBS Oracle  │
-             │   Database    │
-             └───────────────┘
-                              \
-                               ──► Vieri REST API
-                                   (dimensions, accounts, suppliers)
-```
-
-The service acts as a middleware between Eye-Share/Vieri and the OEBS Oracle database. Incoming HTTP requests trigger PL/SQL stored procedures via JDBC, and the results are returned to the caller or forwarded to Vieri's API.
-
+The service acts as a middleware between the external systems Eye-Share and Vieri and the OEBS Oracle database.
+Vieri receives data from OEBS via POST endpoints, requested by a script on the application server triggered daily by OeBS. 
+Eye-Share both fetches data from OEBS via GET endpoints and posts data to OEBS via POST endpoints. Both services uses the
+same _konteringsinfo_ endpoint for validating account strings.
 ---
 
 ## Functionality
@@ -46,16 +26,24 @@ As a result, t1 is the preferred environment for development and testing, and is
 
 This setup deviates from the standard and should be corrected as soon as possible. The URLs cannot be changed since firewall rules reference the u1 URL specifically. However, the instance names should be updated to align with other services.
 
-### Data flow and transformations
+### Data flow
+The data flow through the endpoints can be divided into three main flows. All requests and responses are logged to the OEBS database table `XXRTV_RESTAPI_LOGG`, including correlation ID, timestamps, duration, and status codes.
 
-- Incoming requests carry query parameters (e.g. `orgid`, Eye-Share GUIDs, supplier names, dates).
-- The service maps these parameters to PL/SQL procedure input objects and calls OEBS via JDBC.
-- Results from OEBS are returned as JSON strings.
-- For Vieri endpoints, the data fetched from OEBS is further forwarded via HTTP (Spring WebFlux) to Vieri's REST API.
-- All requests and responses are logged to the OEBS database table `XXRTV_RESTAPI_LOGG`, including correlation ID, timestamps, duration, and status codes.
+#### Eye-Share flow
+Eye-Share makes GET requests to oebs-api-ve to fetch data from OEBS. Requests include query parameters that are mapped to PL/SQL procedure inputs, which are then called via JDBC. Results are returned as JSON to Eye-Share.
+There is also a POST endpoint that Eye-Share uses to send accounting information to OEBS.
+
+#### Vieri flow
+Once a day, a job in OEBS triggers data transfers to Vieri. The transfer is initiated via a [script](https://github.com/navikt/oebs/blob/main/bin/XXRTVVIERIAPI.prog) triggered by OEBS but running on the application server. The script fetches data from OEBS and posts it to Vieri via POST endpoints exposed by this service. Vieri does not consume anything from the API — it only receives data that is posted to it.
+
+#### Shared account string validation
+Both Eye-Share and Vieri use the same account string validation, implemented in this API. This ensures that both systems validate the account string consistently to guarantee data correctness and format.
 
 ### OEBS PL/SQL procedures
-**_todo: link to the OEBS repo for relevant files and add a short description of what each procedure does._**
+Installation of the packages and log tables in OEBS used by this repository is handled by an [install script](https://github.com/navikt/oebs/blob/main/install/install_IFA_restapi_ve_v1.sh) in the OEBS repository.
+
+The [package specification](https://github.com/navikt/oebs/blob/main/admin/sql/xxrtv_oebs-restapi-ve-v1.pks) and [package body](https://github.com/navikt/oebs/blob/main/admin/sql/xxrtv_oebs-restapi-ve-v1.pkb) are also in the OEBS repository.
+The package specification contains the methods called by the services in this repository, and the package body contains their implementations.
 
 ---
 
@@ -103,14 +91,11 @@ Unit tests are set up using JUnit and Mockito. No integration tests are currentl
 
 No alerting is currently configured. Issues must be detected by users experiencing errors when calling the API, or through observed problems in OEBS that can be traced back to the API.
 
-**_todo: update links for the different instances._**
-
 Standard application monitoring is available via Grafana dashboards:
-- [Grafana dashboard for u1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/okonomimodell-api-t1?namespace=team-oebs&environment=dev)
-- [Grafana dashboard for t1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/okonomimodell-api-t1?namespace=team-oebs&environment=dev)
-- [Grafana dashboard for q1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/okonomimodell-api-q1?namespace=team-oebs&environment=dev)
-- [Grafana dashboard for prod](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/okonomimodell-api?namespace=team-oebs&environment=prod)
-
+- [Grafana dashboard for u1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve-u1?namespace=team-oebs&environment=dev-fss)
+- [Grafana dashboard for t1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve-t1?namespace=team-oebs&environment=dev-fss)
+- [Grafana dashboard for q1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve-q1?namespace=team-oebs&environment=dev-fss)
+- [Grafana dashboard for prod](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve?namespace=team-oebs&environment=prod-fss)
 ---
 
 ## Deploy
@@ -146,6 +131,7 @@ Swagger UI is available when the application is running:
 - [Swagger prod](https://oebs-api-ve.intern.nav.no/swagger-ui/index.html#/)
 
 ### Confluence
-**todo: add confluence link here**
+- [Confluence documentation](https://confluence.adeo.no/spaces/ITO/pages/505514658/OEBS+API+-+Innkj%C3%B8p+og+Faktura+NAIS)
+  (Restricted access)
 
 ---
