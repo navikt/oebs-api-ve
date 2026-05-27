@@ -19,7 +19,12 @@ same _konteringsinfo_ endpoint for validating account strings.
 ### Instances and OEBS environments
 The service currently runs with four instances in the secure zone: u1, t1, q1, and prod. External services do not have direct access to the ingress.
 To allow Vieri and Eye-Share to reach the service, firewall rules have been opened from the secure zone (fss) to external users — but only for the u1, q1, and prod ingresses.
-The t1 instance is therefore using the u1 ingress to expose data from oebst1. 
+The t1 instance is therefore only accessible from within the secure zone.
+
+To allow consumers to use oebst1 rather than oebsu1, **the t1 instance exposes data from oebsu1, while u1 exposes data from oebst1**.
+As a result, t1 is the preferred environment for development and testing, and is also the first to be deployed in the pipeline. Deployment order: **t1 → u1 → q1 → prod**.
+
+This setup deviates from the standard and should be corrected as soon as possible. The URLs cannot be changed since firewall rules reference the u1 URL specifically. However, the instance names should be updated to align with other services.
 
 ### Data flow
 The data flow through the endpoints can be divided into three main flows. All requests and responses are logged to the OEBS database table `XXRTV_RESTAPI_LOGG`, including correlation ID, timestamps, duration, and status codes.
@@ -56,7 +61,7 @@ The package specification contains the methods called by the services in this re
 
 ## Running Locally
 
-To run the service locally, use the `local` profile and set the following environment variables. Values for all secrets can be retrieved from the NAIS console for the application `oebs-api-ve-u1`:
+To run the service locally, use the `local` profile and set the following environment variables. Values for all secrets can be retrieved from the NAIS console for the application `oebs-api-ve-t1`:
 
 - `OEBS_USERNAME` – username for OEBS
 - `OEBS_PASSWORD` – password for OEBS
@@ -66,6 +71,9 @@ To run the service locally, use the `local` profile and set the following enviro
 You must also have connectivity to oebsu1, which is located in the secure zone.
 You can either use **vdi-utvikler-oebs** (a VDI set up for development in the secure zone) or the **Global Secure Access Client**.
 For more information, see the [oksty developer documentation](https://github.com/navikt/oksty-documentation).
+
+Note that when running locally, the service connects to **oebsu1**, even though credentials are fetched from the `oebs-api-ve-t1` instance.
+For more information about the different instances, see [Instances and OEBS environments](#instances-and-oebs-environments) under Functionality.
 
 [Swagger UI](http://localhost:8080/swagger-ui/index.html) is available when running locally,
 but all endpoints are protected by Entra ID by default. To test endpoints without authentication,
@@ -94,7 +102,7 @@ Standard application monitoring is available via Grafana dashboards:
 
 ### Branching strategy
 - Feature development should happen on dedicated branches with a PR to `main`.
-- Merging to `main` triggers deployment to **all environments** (U1, T1, Q1, and production).
+- Merging to `main` triggers deployment to **all environments** (T1, U1, Q1, and production).
 
 ### Referencing Jira tasks
 Include the Jira task key in the branch name and/or commit message. All PRs are squash-merged into main, so the most important thing is that the Jira issue is referenced in the squash commit message and that the PR title references the Jira issue.
