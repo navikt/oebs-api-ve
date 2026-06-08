@@ -8,7 +8,9 @@ updates:
       default-days: 7
     open-pull-requests-limit: 10
     reviewers:
-      - navikt/team-oebs
+      - bougrNAV
+      - rasmusvknav
+      - agnesstrandbu-nav
   - package-ecosystem: maven
     directory: "/"
     schedule:
@@ -17,7 +19,9 @@ updates:
       default-days: 7
     open-pull-requests-limit: 50
     reviewers:
-      - navikt/team-oebs
+      - bougrNAV
+      - rasmusvknav
+      - agnesstrandbu-nav
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
@@ -26,4 +30,6 @@ updates:
       default-days: 7
     open-pull-requests-limit: 10
     reviewers:
-      - navikt/team-oebs
+      - bougrNAV
+      - rasmusvknav
+      - agnesstrandbu-nav
