@@ -58,6 +58,45 @@ The package specification contains the methods called by the services in this re
 | **NAIS platform** | Container orchestration, secrets management, and deployment |
 
 ---
+## External systems with access to the API
+
+The service currently has two external consumers: Eye-Share and Vieri.
+Both systems are protected by Azure AD, and access is granted via app registrations in Azure AD.
+
+Changes that requires updates on the consumer side (e.g. new endpoints, changes to request/response formats, etc.)
+must be coordinated with Eye-share and Vieri. They can be conntacted by: 
+
+- Vieri: Email to `support@vieri.no`
+- Eye-Share: Eye-Share uses [ServiceNow](https://eyeshare.service-now.com/escs?id=escs_login) for support. In principle, all requests should be submitted through ServiceNow,
+but for minor changes that only require configuration adjustments, requests can be sent to the email addresses listed below.  
+
+  _**Konto:** Nav  
+  **Produkt:** Workflow  
+  **Relatert til oppgradering:** Provide an assessment of this, usually "No"  
+  **Prioritet:** Provide a priority assessment. For an information case, this is "Low"  
+  **CC:** Add other team members who should follow the case. Always include Pål Schärer to stay informed._  
+  - Primary contact: Tayyab Khalid `tayyab.khalid@eye-share.no`
+  - Backup contact: Audun Nymoen `audun.nymoen@eye-share.no`
+
+### Azure AD Authentication
+All consumers have been manually created as app registrations in Azure AD and have been granted access
+to the service by the security team in NAV. Below are links to the apps that have been created and the consumers
+user to grant access to the service. In trygdeetaten tenant, the same app registration is used for both Eye-share and Vieri,
+while in NAV tenant they have separate app registrations. The reason for this setup is unknown.
+
+This setup is unfortunate, as it means that team-oebs and the security team must maintain credentials stored in Azure AD,
+rather than having this managed by the consumers themselves. It should therefore be changed to use Maskinporten,
+which is NAV's standard solution for data exchange between external systems. The setup also means
+that consumers lose access if a deployment is made after old workloads have been deleted.
+
+| Instans            | Consumers                                                                                                                                                                                                                                                                                             | Tenant       |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| **oebs-api-ve-t1** | Not in use by external systems                                                                                                                                                                                                                                                                        | trygdeetaten |
+| **oebs-api-ve-u1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                                | trygdeetaten |
+| **oebs-api-ve-q1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                              | trygdeetaten |
+| **oebs-api-ve**    | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/4ee4e547-7737-43b3-bdae-449d475eb55b), [Vieri](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/CallAnAPI/appId/84c743e2-0dec-48b1-b046-8fadc4e85c76) | nav          |
+
+
 
 ## Running Locally
 
@@ -65,7 +104,7 @@ To run the service locally, use the `local` profile and set the following enviro
 
 - `OEBS_USERNAME` – username for OEBS
 - `OEBS_PASSWORD` – password for OEBS
-- `OEBS_URL` – URL for OEBS
+- `OEBS_URL` – URL for OEBS, find in https://confluence.adeo.no/spaces/ITO/pages/39159672/OeBS+Oversikt+over+milj%C3%B8er
 - `AZURE_APP_WELL_KNOWN_URL` – discovery URL for the Azure AD app
 
 You must also have connectivity to oebsu1, which is located in the secure zone.
