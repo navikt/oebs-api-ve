@@ -38,7 +38,7 @@
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
         <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
         <lombok.version>1.18.46</lombok.version>
-        <jacoco.version>0.8.14</jacoco.version>
+        <jacoco.version>0.8.15</jacoco.version>
     </properties>
 
     <dependencies>
