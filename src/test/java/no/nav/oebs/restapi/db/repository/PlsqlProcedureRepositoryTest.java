@@ -35,7 +35,7 @@ class PlsqlProcedureRepositoryTest {
 
     private PlsqlProcedureRepository repository;
 
-    private static final String VALID_PROCEDURE = "PACKAGE.PROCEDURE";
+    private static final String VALID_PROCEDURE = "SCHEMA.PACKAGE.PROCEDURE";
 
     @BeforeEach
     void setUp() {
