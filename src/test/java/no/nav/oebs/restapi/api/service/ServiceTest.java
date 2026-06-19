@@ -87,7 +87,7 @@ public class ServiceTest {
             service.finnBestillingstransaksjoner(202, "3170085");
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_bestillingsinfo"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_bestillingsinfo"), any());
         }
     }
 
@@ -121,7 +121,7 @@ public class ServiceTest {
             service.finnBetalingsDato(202, "some-guid");
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_betalingsdato"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_betalingsdato"), any());
         }
     }
 
@@ -155,7 +155,7 @@ public class ServiceTest {
             service.finnBilagsNummer(202, "some-guid");
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_bilagsnummer"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_bilagsnummer"), any());
         }
     }
 
@@ -189,7 +189,7 @@ public class ServiceTest {
             service.finnBokfoertStatus(202, "doc-id-123");
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_bokfoertstatus"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_bokfoertstatus"), any());
         }
     }
 
@@ -223,7 +223,7 @@ public class ServiceTest {
             service.finnFakturaInfo("{}");
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_fakturainfo"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_fakturainfo"), any());
         }
 
         @Test
@@ -285,7 +285,7 @@ public class ServiceTest {
             service.finnKonteringstransaksjoner(202, "KSTED", "1234", LocalDate.now());
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_hent_segmenter"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_segmenter"), any());
         }
 
         @Test
@@ -331,7 +331,7 @@ public class ServiceTest {
                     202, "4900", "1234", null, null, null, null, null, null, null, null, null, null, null);
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kstreng"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kstreng"), any());
         }
 
         @Test
@@ -377,7 +377,7 @@ public class ServiceTest {
             service.finnLeverandortransaksjoner(202, "Navn AS", "12345", "Oslo", LocalDate.now());
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_hent_leverandorer"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_leverandorer"), any());
         }
 
         @Test
@@ -431,7 +431,7 @@ public class ServiceTest {
             service.finnKonteringsinfoHbVieritransaksjoner(202, "KSTED", "1234", LocalDate.now());
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kont_info_hb_vieri"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kont_info_hb_vieri"), any());
         }
 
         @Test
@@ -475,7 +475,7 @@ public class ServiceTest {
             service.finnKonteringsinfoVieritransaksjoner(202, "KSTED", "1234", LocalDate.now());
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kont_info_vieri"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kont_info_vieri"), any());
         }
 
         @Test
@@ -519,7 +519,7 @@ public class ServiceTest {
             service.finnLeverandortransaksjoner(202, "Navn AS", "12345", "Oslo", LocalDate.now());
 
             verify(plsqlProcedureRepository).executeInOutProcedure(
-                    eq("xxrtv_restapi_oebs_ve_v1.xxrtv_hent_leverandorervieri"), any());
+                    eq("apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_leverandorervieri"), any());
         }
 
         @Test
