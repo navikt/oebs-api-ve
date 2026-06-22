@@ -15,7 +15,7 @@ import tools.jackson.databind.json.JsonMapper;
 @Service
 @Transactional(noRollbackFor = { Exception.class })
 public class LeverandorinfoServiceVieri extends ObjektMaps {
-	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_hent_leverandorervieri";
+	private static final String PLSQL_PROCEDURE = "apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_leverandorervieri";
 
 	private final PlsqlProcedureRepository plsqlProcedureRepository;
 

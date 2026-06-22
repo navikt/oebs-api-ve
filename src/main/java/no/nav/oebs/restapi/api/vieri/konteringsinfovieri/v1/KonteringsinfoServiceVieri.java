@@ -17,7 +17,7 @@ import tools.jackson.databind.json.JsonMapper;
 public class KonteringsinfoServiceVieri extends ObjektMaps {
 
 	private final PlsqlProcedureRepository plsqlProcedureRepository;
-	private static final String PLSQL_PROCEDURE = "xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kont_info_vieri";
+	private static final String PLSQL_PROCEDURE = "apps.xxrtv_restapi_oebs_ve_v1.xxrtv_hent_kont_info_vieri";
 	public KonteringsinfoServiceVieri(PlsqlProcedureRepository plsqlProcedureRepository, JsonMapper objectMapper) {
 		super(objectMapper);
 		this.plsqlProcedureRepository = plsqlProcedureRepository;
