@@ -15,6 +15,7 @@
 
     <properties>
         <java.version>21</java.version>
+        <netty.version>4.2.15.Final</netty.version>
 
         <!-- SonarQube -->
         <sonar.organization>navikt</sonar.organization>
