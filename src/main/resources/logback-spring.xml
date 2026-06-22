@@ -20,7 +20,6 @@
         <root level="INFO">
             <appender-ref ref="stdout_json" />
         </root>
-        <logger name="no.nav.security" level="DEBUG" />
     </springProfile>
 
     <springProfile name="local">
