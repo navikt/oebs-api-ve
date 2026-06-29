@@ -1,5 +1,8 @@
 # oebs-api-ve
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=navikt_oebs-api-ve&metric=coverage)](https://sonarcloud.io/summary/new_code?id=navikt_oebs-api-ve)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_oebs-api-ve&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=navikt_oebs-api-ve)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=navikt_oebs-api-ve&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=navikt_oebs-api-ve)  
 REST API service that integrates OEBS (Oracle E-Business Suite) with Eye-Share and Vieri. The service exposes PL/SQL stored procedures from OEBS as REST endpoints, enabling querying and pushing data related to invoices, purchase orders, accounting entries, and supplier information.
 OEBS uses the API to post data to Vieri, and Eye-Share uses it to fetch data from OEBS.
 
