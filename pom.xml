@@ -37,7 +37,7 @@
         <!-- NAV artifacts -->
         <token-validation.version>5.0.30</token-validation.version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
-        <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
+        <springdoc-openapi.version>3.1.0</springdoc-openapi.version>
         <lombok.version>1.18.46</lombok.version>
         <jacoco.version>0.8.15</jacoco.version>
     </properties>
