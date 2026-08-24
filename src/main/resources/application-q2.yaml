@@ -1,0 +1,8 @@
+oebs:
+  environment: OEBSQ2
+  version: 1.0.0
+  date: 21.08.2026
+
+spring:
+  datasource:
+    url: ${ORACLE_URL}
