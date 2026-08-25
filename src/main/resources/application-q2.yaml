@@ -10,3 +10,8 @@ spring:
     database-platform: org.hibernate.dialect.OracleDialect
     hibernate:
       ddl-auto: none
+
+no.nav.security.jwt:
+  issuer:
+    azure:
+      proxyurl: ""
