@@ -6,3 +6,7 @@ oebs:
 spring:
   datasource:
     url: ${ORACLE_URL}
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none
