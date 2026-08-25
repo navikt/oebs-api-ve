@@ -20,12 +20,13 @@ same _konteringsinfo_ endpoint for validating account strings.
 ## Functionality
 
 ### Instances and OEBS environments
-The service currently runs with four instances in the secure zone: u1, t1, q1, and prod. External services do not have direct access to the ingress.
+The service currently runs with five instances: u1, t1, q1, and prod in the secure zone (FSS), and q2 in GCP (dev-gcp). External services do not have direct access to the ingress.
 To allow Vieri and Eye-Share to reach the service, firewall rules have been opened from the secure zone (fss) to external users — but only for the u1, q1, and prod ingresses.
 The t1 instance is therefore only accessible from within the secure zone.
+The q2 instance runs in GCP against the oebsq2 database and is accessible externally at `https://oebs-api-ve-q2.ekstern.dev.nav.no`.
 
 To allow consumers to use oebst1 rather than oebsu1, **the t1 instance exposes data from oebsu1, while u1 exposes data from oebst1**.
-As a result, t1 is the preferred environment for development and testing, and is also the first to be deployed in the pipeline. Deployment order: **t1 → u1 → q1 → prod**.
+As a result, t1 is the preferred environment for development and testing, and is also the first to be deployed in the pipeline. Deployment order: **t1 → u1 → q1 → q2 → prod**.
 
 This setup deviates from the standard and should be corrected as soon as possible. The URLs cannot be changed since firewall rules reference the u1 URL specifically. However, the instance names should be updated to align with other services.
 
@@ -92,11 +93,12 @@ rather than having this managed by the consumers themselves. It should therefore
 which is NAV's standard solution for data exchange between external systems. The setup also means
 that consumers lose access if a deployment is made after old workloads have been deleted.
 
-| Instans            | Consumers                                                                                                                                                                                                                                                                                             | Tenant       |
-|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| **oebs-api-ve-t1** | Not in use by external systems                                                                                                                                                                                                                                                                        | trygdeetaten |
-| **oebs-api-ve-u1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                                | trygdeetaten |
-| **oebs-api-ve-q1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                              | trygdeetaten |
+| Instans            | Consumers                                                                                                                                                                                                                                                                                            | Tenant       |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| **oebs-api-ve-t1** | Not in use by external systems                                                                                                                                                                                                                                                                       | trygdeetaten |
+| **oebs-api-ve-u1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                               | trygdeetaten |
+| **oebs-api-ve-q1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                             | trygdeetaten |
+| **oebs-api-ve-q2** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false)                                                                                           | trygdeetaten |
 | **oebs-api-ve**    | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/4ee4e547-7737-43b3-bdae-449d475eb55b), [Vieri](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/CallAnAPI/appId/84c743e2-0dec-48b1-b046-8fadc4e85c76) | nav          |
 
 
@@ -137,6 +139,7 @@ Standard application monitoring is available via Grafana dashboards:
 - [Grafana dashboard for u1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve-u1?namespace=team-oebs&environment=dev-fss)
 - [Grafana dashboard for t1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve-t1?namespace=team-oebs&environment=dev-fss)
 - [Grafana dashboard for q1](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve-q1?namespace=team-oebs&environment=dev-fss)
+- [Grafana dashboard for q2](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve-q2?namespace=team-oebs&environment=dev-gcp)
 - [Grafana dashboard for prod](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/team-oebs/oebs-api-ve?namespace=team-oebs&environment=prod-fss)
 ---
 
@@ -144,7 +147,7 @@ Standard application monitoring is available via Grafana dashboards:
 
 ### Branching strategy
 - Feature development should happen on dedicated branches with a PR to `main`.
-- Merging to `main` triggers deployment to **all environments** (T1, U1, Q1, and production).
+- Merging to `main` triggers deployment to **all environments** (T1, U1, Q1, Q2, and production).
 
 ### Referencing Jira tasks
 Include the Jira task key in the branch name and/or commit message. All PRs are squash-merged into main, so the most important thing is that the Jira issue is referenced in the squash commit message and that the PR title references the Jira issue.
@@ -170,6 +173,7 @@ Swagger UI is available when the application is running:
 - [Swagger u1](https://oebs-api-ve-u1.dev.intern.nav.no/swagger-ui/index.html#/)
 - [Swagger t1](https://oebs-api-ve-t1.dev.intern.nav.no/swagger-ui/index.html#/)
 - [Swagger q1](https://oebs-api-ve-q1.dev.intern.nav.no/swagger-ui/index.html#/)
+- [Swagger q2](https://oebs-api-ve-q2.ekstern.dev.nav.no/swagger-ui/index.html#/)
 - [Swagger prod](https://oebs-api-ve.intern.nav.no/swagger-ui/index.html#/)
 
 ### Confluence
