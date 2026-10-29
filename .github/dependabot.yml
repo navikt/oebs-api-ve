@@ -6,7 +6,7 @@ updates:
       interval: daily
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 1
     reviewers:
       - navikt/oebs-java-dev
   - package-ecosystem: maven
@@ -15,7 +15,7 @@ updates:
       interval: daily
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 50
+    open-pull-requests-limit: 1
     reviewers:
       - navikt/oebs-java-dev
   - package-ecosystem: github-actions
@@ -24,6 +24,6 @@ updates:
       interval: daily
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 1
     reviewers:
       - navikt/oebs-java-dev
