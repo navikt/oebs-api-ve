@@ -13,8 +13,7 @@ OEBS uses the API to post data to Vieri, and Eye-Share uses it to fetch data fro
 
 The service acts as a middleware between the external systems Eye-Share and Vieri and the OEBS Oracle database.
 Vieri receives data from OEBS via POST endpoints, requested by a script on the application server triggered daily by OeBS. 
-Eye-Share both fetches data from OEBS via GET endpoints and posts data to OEBS via POST endpoints. Both services uses the
-same _konteringsinfo_ endpoint for validating account strings.
+Eye-Share both fetches data from OEBS via GET endpoints and posts data to OEBS via POST endpoints. 
 ---
 
 ## Functionality
@@ -40,8 +39,8 @@ There is also a POST endpoint that Eye-Share uses to send accounting information
 #### Vieri flow
 Once a day, a job in OEBS triggers data transfers to Vieri. The transfer is initiated via a [script](https://github.com/navikt/oebs/blob/main/bin/XXRTVVIERIAPI.prog) triggered by OEBS but running on the application server. The script fetches data from OEBS and posts it to Vieri via POST endpoints exposed by this service. Vieri does not consume anything from the API — it only receives data that is posted to it.
 
-#### Shared account string validation
-Both Eye-Share and Vieri use the same account string validation, implemented in this API. This ensures that both systems validate the account string consistently to guarantee data correctness and format.
+#### Account string validation
+Eye-Share use the same account string validation, implemented in this API. They should switch to use the /kontostreng/validering endpoint in [okonomimodell-api](https://github.com/navikt/okonomimodell-api)
 
 ### OEBS PL/SQL procedures
 Installation of the packages and log tables in OEBS used by this repository is handled by an [install script](https://github.com/navikt/oebs/blob/main/install/install_IFA_restapi_ve_v1.sh) in the OEBS repository.
@@ -64,11 +63,9 @@ The package specification contains the methods called by the services in this re
 ---
 ## External systems with access to the API
 
-The service currently has two external consumers: Eye-Share and Vieri.
-Both systems are protected by Azure AD, and access is granted via app registrations in Azure AD.
-
-Changes that requires updates on the consumer side (e.g. new endpoints, changes to request/response formats, etc.)
-must be coordinated with Eye-share and Vieri. They can be conntacted by: 
+The service is currently integrated with two external systems: Eye-Share and Vieri.
+Access for Eye-Share is granted via app registrations in Azure AD. Changes that requires updates on the consumer
+side (e.g. new endpoints, changes to request/response formats, etc.) must be coordinated with Eye-share.
 
 - Vieri: Email to `support@vieri.no`
 - Eye-Share: Eye-Share uses [ServiceNow](https://eyeshare.service-now.com/escs?id=escs_login) for support. In principle, all requests should be submitted through ServiceNow,
@@ -82,24 +79,23 @@ but for minor changes that only require configuration adjustments, requests can 
   - Primary contact: Tayyab Khalid `tayyab.khalid@eye-share.no`
   - Backup contact: Audun Nymoen `audun.nymoen@eye-share.no`
 
-### Azure AD Authentication
-All consumers have been manually created as app registrations in Azure AD and have been granted access
+### Azure AD Authentication for Eye-Share
+Eye-Share have been manually created as app registrations in Azure AD and have been granted access
 to the service by the security team in NAV. Below are links to the apps that have been created and the consumers
-user to grant access to the service. In trygdeetaten tenant, the same app registration is used for both Eye-share and Vieri,
-while in NAV tenant they have separate app registrations. The reason for this setup is unknown.
+user to grant access to the service. 
 
 This setup is unfortunate, as it means that team-oebs and the security team must maintain credentials stored in Azure AD,
 rather than having this managed by the consumers themselves. It should therefore be changed to use Maskinporten,
 which is NAV's standard solution for data exchange between external systems. The setup also means
 that consumers lose access if a deployment is made after old workloads have been deleted.
 
-| Instans            | Consumers                                                                                                                                                                                                                                                                                            | Tenant       |
-|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| **oebs-api-ve-t1** | Not in use by external systems                                                                                                                                                                                                                                                                       | trygdeetaten |
-| **oebs-api-ve-u1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                               | trygdeetaten |
-| **oebs-api-ve-q1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false) (used by both Eye-share and Vieri)                                                                                             | trygdeetaten |
-| **oebs-api-ve-q2** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false)                                                                                           | trygdeetaten |
-| **oebs-api-ve**    | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/4ee4e547-7737-43b3-bdae-449d475eb55b), [Vieri](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/CallAnAPI/appId/84c743e2-0dec-48b1-b046-8fadc4e85c76) | nav          |
+| Instans            | Consumers                                                                                                                                                                                                                                                                                          | Tenant       |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| **oebs-api-ve-t1** | Not in use by external systems                                                                                                                                                                                                                                                                     | trygdeetaten |
+| **oebs-api-ve-u1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false)                                                                                           | trygdeetaten |
+| **oebs-api-ve-q1** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false)                                                                                         | trygdeetaten |
+| **oebs-api-ve-q2** | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/1b07a0a9-c182-41f6-98af-7285353af7c9/isMSAApp~/false)                                                                                         | trygdeetaten |
+| **oebs-api-ve**    | [Eye-share](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/4ee4e547-7737-43b3-bdae-449d475eb55b) | nav          |
 
 
 
